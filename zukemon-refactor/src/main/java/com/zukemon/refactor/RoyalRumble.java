@@ -27,25 +27,21 @@ public class RoyalRumble extends FightStyle {
             attack(attacker, defender);
             if (defender.isDead()) {
                 fighters.remove(defender);
-                addHistoryEntry("Zukemon '" + defender.getClass().getSimpleName() + "' is out of the royal rumble.\r\n");
+                addHistoryEntry("Zukemon '" + getName(defender) + "' is out of the royal rumble.\r\n");
             }
         }
+
         return fighters.get(0);
     }
 
     private List<Zukemon> createFighterList() {
-        Zukemon fighter1 = fight.getZukemonFactory().createRandomZukemon();
-        Zukemon fighter2 = fight.getZukemonFactory().createRandomZukemon();
-        Zukemon fighter3 = fight.getZukemonFactory().createRandomZukemon();
-        Zukemon fighter4 = fight.getZukemonFactory().createRandomZukemon();
-        Zukemon fighter5 = fight.getZukemonFactory().createRandomZukemon();
-
         List<Zukemon> fighters = new ArrayList<>();
-        fighters.add(fighter1);
-        fighters.add(fighter2);
-        fighters.add(fighter3);
-        fighters.add(fighter4);
-        fighters.add(fighter5);
+
+        fighters.add(fight.getZukemonFactory().createRandomZukemon());
+        fighters.add(fight.getZukemonFactory().createRandomZukemon());
+        fighters.add(fight.getZukemonFactory().createRandomZukemon());
+        fighters.add(fight.getZukemonFactory().createRandomZukemon());
+        fighters.add(fight.getZukemonFactory().createRandomZukemon());
 
         return fighters;
     }

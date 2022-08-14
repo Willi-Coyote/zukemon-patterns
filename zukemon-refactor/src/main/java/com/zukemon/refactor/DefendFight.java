@@ -19,7 +19,7 @@ public class DefendFight extends FightStyle {
         while (true) {
             attack(attacker, defender);
             if (defender.isDead()) {
-                addHistoryEntry("Zukemon '" + defender.getClass().getSimpleName() + "' has survived " + numberOfSurvivedRounds + " rounds.\r\n");
+                addHistoryEntry("Zukemon '" + getName(defender) + "' has survived " + numberOfSurvivedRounds + " rounds.\r\n");
                 return attacker;
             }
 
