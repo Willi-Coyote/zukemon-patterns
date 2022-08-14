@@ -4,14 +4,14 @@ import com.zukemon.refactor.zukemons.Zukemon;
 
 public class DefendFight extends FightStyle {
 
-    public DefendFight(Fight fight) {
-        super(fight);
+    public DefendFight(ZukemonFactory zukemonFactory) {
+        super(zukemonFactory);
     }
 
     @Override
     public Zukemon fight() {
-        Zukemon attacker = fight.getZukemonFactory().createRandomZukemon();
-        Zukemon defender = fight.getZukemonFactory().createRandomZukemon();
+        Zukemon attacker = zukemonFactory.createRandomZukemon();
+        Zukemon defender = zukemonFactory.createRandomZukemon();
         int initialLifePoints = defender.getLifePoints();
         defender.increaseLifePointsBy(5000);
 
@@ -19,7 +19,7 @@ public class DefendFight extends FightStyle {
         while (true) {
             attack(attacker, defender);
             if (defender.isDead()) {
-                addHistoryEntry("Zukemon '" + getName(defender) + "' has survived " + numberOfSurvivedRounds + " rounds.\r\n");
+                updateObserversZukemonDied(defender, "Zukemon '" + getName(defender) + "' has survived " + numberOfSurvivedRounds + " rounds.\r\n");
                 return attacker;
             }
 
@@ -30,5 +30,10 @@ public class DefendFight extends FightStyle {
 
     private void heal10Percent(Zukemon defender, int lifePointsToHeal) {
         defender.increaseLifePointsBy(lifePointsToHeal);
+    }
+
+    @Override
+    protected FightMode getFightMode() {
+        return FightMode.DEFEND;
     }
 }

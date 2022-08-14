@@ -3,10 +3,8 @@ package com.zukemon.refactor;
 import com.zukemon.refactor.zukemons.Zukemon;
 
 public class Fight {
-    ZukemonFactory zukemonFactory = new ZukemonFactory();
 
-    private final ArenaDisplay arenaDisplay = new ArenaDisplay();
-    private int highScore = 0;
+    ZukemonFactory zukemonFactory = new ZukemonFactory();
 
     /**
      * Blastoise #9 Water Damage 258
@@ -24,23 +22,12 @@ public class Fight {
      */
     public Zukemon fight(FightMode fightMode) {
         FightModeFactory fightModeFactory = new FightModeFactory();
-        FightStyle fight = fightModeFactory.createFight(fightMode, this);
+
+        FightStyle fight = fightModeFactory.createFight(fightMode, zukemonFactory);
+        fight.addObserver(new HighScore());
+        fight.addObserver(new ArenaDisplay());
+        fight.addObserver(new HistoryRecorder());
+
         return fight.fight();
-    }
-
-    public int getHighScore() {
-        return highScore;
-    }
-
-    public ArenaDisplay getArenaDisplay() {
-        return arenaDisplay;
-    }
-
-    public void setHighScore(int newHighScore) {
-        this.highScore = newHighScore;
-    }
-
-    public ZukemonFactory getZukemonFactory() {
-        return zukemonFactory;
     }
 }

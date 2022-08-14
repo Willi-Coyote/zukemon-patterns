@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class RoyalRumble extends FightStyle {
 
-    public RoyalRumble(Fight fight) {
-        super(fight);
+    public RoyalRumble(ZukemonFactory zukemonFactory) {
+        super(zukemonFactory);
     }
 
     @Override
@@ -26,8 +26,8 @@ public class RoyalRumble extends FightStyle {
 
             attack(attacker, defender);
             if (defender.isDead()) {
+                updateObserversZukemonDied(defender, "Zukemon '" + getName(defender) + "' is out of the royal rumble.\r\n");
                 fighters.remove(defender);
-                addHistoryEntry("Zukemon '" + getName(defender) + "' is out of the royal rumble.\r\n");
             }
         }
 
@@ -37,12 +37,17 @@ public class RoyalRumble extends FightStyle {
     private List<Zukemon> createFighterList() {
         List<Zukemon> fighters = new ArrayList<>();
 
-        fighters.add(fight.getZukemonFactory().createRandomZukemon());
-        fighters.add(fight.getZukemonFactory().createRandomZukemon());
-        fighters.add(fight.getZukemonFactory().createRandomZukemon());
-        fighters.add(fight.getZukemonFactory().createRandomZukemon());
-        fighters.add(fight.getZukemonFactory().createRandomZukemon());
+        fighters.add(zukemonFactory.createRandomZukemon());
+        fighters.add(zukemonFactory.createRandomZukemon());
+        fighters.add(zukemonFactory.createRandomZukemon());
+        fighters.add(zukemonFactory.createRandomZukemon());
+        fighters.add(zukemonFactory.createRandomZukemon());
 
         return fighters;
+    }
+
+    @Override
+    protected FightMode getFightMode() {
+        return FightMode.ROYAL_RUMBLE;
     }
 }
