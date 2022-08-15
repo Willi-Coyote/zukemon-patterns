@@ -1,10 +1,12 @@
-package com.zukemon.refactor;
+package com.zukemon.refactor.fight;
 
+import com.zukemon.refactor.FightType;
+import com.zukemon.refactor.zukemons.ZukemonFactory;
 import com.zukemon.refactor.zukemons.Zukemon;
 
-public class DefendFight extends FightStyle {
+public class Survive extends FightMode {
 
-    public DefendFight(ZukemonFactory zukemonFactory) {
+    public Survive(ZukemonFactory zukemonFactory) {
         super(zukemonFactory);
     }
 
@@ -33,7 +35,7 @@ public class DefendFight extends FightStyle {
     }
 
     @Override
-    protected FightMode getFightMode() {
-        return FightMode.DEFEND;
+    protected FightType getFightType() {
+        return FightType.SURVIVE;
     }
 }

@@ -1,5 +1,7 @@
-package com.zukemon.refactor;
+package com.zukemon.refactor.stats;
 
+import com.zukemon.refactor.FightObserver;
+import com.zukemon.refactor.FightType;
 import com.zukemon.refactor.zukemons.Zukemon;
 
 import java.io.File;
@@ -12,7 +14,7 @@ public class HistoryRecorder implements FightObserver {
     public static final String HISTORY_FILENAME = "history.txt";
 
     @Override
-    public void update(Zukemon attacker, Zukemon defender, int damage, FightMode fightMode) {
+    public void update(Zukemon attacker, Zukemon defender, int damage, FightType fightType) {
         addHistoryRecord(attacker, defender, damage);
     }
 

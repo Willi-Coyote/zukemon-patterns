@@ -1,10 +1,12 @@
-package com.zukemon.refactor;
+package com.zukemon.refactor.fight;
 
+import com.zukemon.refactor.FightType;
+import com.zukemon.refactor.zukemons.ZukemonFactory;
 import com.zukemon.refactor.zukemons.Zukemon;
 
-public class NormalFight extends FightStyle {
+public class Classic extends FightMode {
 
-    public NormalFight(ZukemonFactory zukemonFactory) {
+    public Classic(ZukemonFactory zukemonFactory) {
         super(zukemonFactory);
     }
 
@@ -23,7 +25,7 @@ public class NormalFight extends FightStyle {
     }
 
     @Override
-    protected FightMode getFightMode() {
-        return FightMode.NORMAL;
+    protected FightType getFightType() {
+        return FightType.CLASSIC;
     }
 }

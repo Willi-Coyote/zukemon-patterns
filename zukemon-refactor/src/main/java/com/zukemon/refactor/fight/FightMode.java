@@ -1,23 +1,20 @@
-package com.zukemon.refactor;
+package com.zukemon.refactor.fight;
 
+import com.zukemon.refactor.FightObserver;
+import com.zukemon.refactor.FightType;
 import com.zukemon.refactor.zukemons.Zukemon;
+import com.zukemon.refactor.zukemons.ZukemonFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class FightStyle {
+public abstract class FightMode {
     protected ZukemonFactory zukemonFactory;
 
     private List<FightObserver> observers = new ArrayList<>();
 
-    public FightStyle(ZukemonFactory zukemonFactory) {
+    public FightMode(ZukemonFactory zukemonFactory) {
         this.zukemonFactory = zukemonFactory;
-    }
-
-    public abstract Zukemon fight();
-
-    public void addObserver(FightObserver observer) {
-        this.observers.add(observer);
     }
 
     protected Zukemon attack(Zukemon attacker, Zukemon defender) {
@@ -33,13 +30,19 @@ public abstract class FightStyle {
         return zukemon.getClass().getSimpleName();
     }
 
+    public void addObserver(FightObserver observer) {
+        this.observers.add(observer);
+    }
+
     private void updateObservers(Zukemon attacker, Zukemon defender, int damage) {
-        observers.stream().forEach(o -> o.update(attacker, defender, damage, getFightMode()));
+        observers.forEach(o -> o.update(attacker, defender, damage, getFightType()));
     }
 
     protected void updateObserversZukemonDied(Zukemon deadBody, String message) {
-        observers.stream().forEach(o -> o.fighterDied(deadBody, message));
+        observers.forEach(o -> o.fighterDied(deadBody, message));
     }
 
-    protected abstract FightMode getFightMode();
+    protected abstract FightType getFightType();
+
+    public abstract Zukemon fight();
 }

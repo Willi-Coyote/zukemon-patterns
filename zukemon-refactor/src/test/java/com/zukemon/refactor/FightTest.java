@@ -1,7 +1,6 @@
 package com.zukemon.refactor;
 
 import com.zukemon.refactor.zukemons.*;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +28,7 @@ public class FightTest {
     public void wartortleVsBlastoiseNormalMode() {
         Mockito.when(factory.createRandomZukemon()).thenReturn(new Wartortle()).thenReturn(new Blastoise());
 
-        Zukemon winner = fight.fight(FightMode.NORMAL);
+        Zukemon winner = fight.fight(FightType.CLASSIC);
 
         assertThat(winner).isInstanceOf(Wartortle.class);
     }
@@ -38,7 +37,7 @@ public class FightTest {
     public void wartortleVsBlastoiseDefendMode() {
         Mockito.when(factory.createRandomZukemon()).thenReturn(new Wartortle()).thenReturn(new Blastoise());
 
-        Zukemon winner = fight.fight(FightMode.DEFEND);
+        Zukemon winner = fight.fight(FightType.SURVIVE);
 
         assertThat(winner).isInstanceOf(Wartortle.class);
     }
@@ -50,7 +49,7 @@ public class FightTest {
         krookodile.increaseLifePointsBy(10000);
         Mockito.when(factory.createRandomZukemon()).thenReturn(new Wartortle()).thenReturn(new Blastoise()).thenReturn(krookodile).thenReturn(new Mew()).thenReturn(new Pikachu());
 
-        Zukemon winner = fight.fight(FightMode.ROYAL_RUMBLE);
+        Zukemon winner = fight.fight(FightType.ROYAL_RUMBLE);
 
         assertThat(winner).isEqualTo(krookodile);
     }

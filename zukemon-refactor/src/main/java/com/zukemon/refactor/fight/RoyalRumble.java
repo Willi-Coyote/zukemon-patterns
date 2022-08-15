@@ -1,12 +1,14 @@
-package com.zukemon.refactor;
+package com.zukemon.refactor.fight;
 
+import com.zukemon.refactor.FightType;
+import com.zukemon.refactor.zukemons.ZukemonFactory;
 import com.zukemon.refactor.zukemons.Zukemon;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class RoyalRumble extends FightStyle {
+public class RoyalRumble extends FightMode {
 
     public RoyalRumble(ZukemonFactory zukemonFactory) {
         super(zukemonFactory);
@@ -47,7 +49,7 @@ public class RoyalRumble extends FightStyle {
     }
 
     @Override
-    protected FightMode getFightMode() {
-        return FightMode.ROYAL_RUMBLE;
+    protected FightType getFightType() {
+        return FightType.ROYAL_RUMBLE;
     }
 }
