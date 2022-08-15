@@ -2,6 +2,9 @@ package com.zukemon.refactor;
 
 import com.zukemon.refactor.fight.FightMode;
 import com.zukemon.refactor.fight.FightModeFactory;
+import com.zukemon.refactor.stats.ArenaDisplay;
+import com.zukemon.refactor.stats.HighScore;
+import com.zukemon.refactor.stats.HistoryRecorder;
 import com.zukemon.refactor.zukemons.Zukemon;
 
 public class Fight {
@@ -9,7 +12,8 @@ public class Fight {
     ZukemonFactory zukemonFactory = new ZukemonFactory();
 
     private final ArenaDisplay arenaDisplay = new ArenaDisplay();
-    private int highScore = 0;
+    private HighScore highScore = new HighScore();
+    private HistoryRecorder historyRecorder = new HistoryRecorder();
 
     /**
      * Blastoise #9 Water Damage 258
@@ -34,19 +38,19 @@ public class Fight {
         return fightMode.attack();
     }
 
-    public int getHighScore() {
-        return highScore;
-    }
-
-    public void setHighScore(int damage) {
-        this.highScore = damage;
-    }
-
     public ZukemonFactory getZukemonFactory() {
         return zukemonFactory;
     }
 
     public ArenaDisplay getArenaDisplay() {
         return arenaDisplay;
+    }
+
+    public HighScore getHighScore() {
+        return highScore;
+    }
+
+    public HistoryRecorder getHistoryRecorder() {
+        return historyRecorder;
     }
 }

@@ -3,12 +3,6 @@ package com.zukemon.refactor.fight;
 import com.zukemon.refactor.Fight;
 import com.zukemon.refactor.zukemons.Zukemon;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-
 public class Defend extends FightMode {
     public Defend(Fight fight) {
         super(fight);
@@ -27,7 +21,7 @@ public class Defend extends FightMode {
         while (true) {
            attack(attacker, defender);
             if (defender.isDead()) {
-                updateHistory("Zukemon '" + defender.getClass().getSimpleName() + "' has survived " + numberOfSurvivedRounds + " rounds.\r\n");
+                getFight().getHistoryRecorder().updateHistory("Zukemon '" + defender.getClass().getSimpleName() + "' has survived " + numberOfSurvivedRounds + " rounds.\r\n");
                 return attacker;
             }
 

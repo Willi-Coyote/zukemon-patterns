@@ -1,4 +1,4 @@
-package com.zukemon.refactor;
+package com.zukemon.refactor.stats;
 
 import com.zukemon.refactor.zukemons.Zukemon;
 

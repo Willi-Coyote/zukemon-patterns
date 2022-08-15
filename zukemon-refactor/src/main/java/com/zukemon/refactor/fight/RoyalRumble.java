@@ -38,7 +38,7 @@ public class RoyalRumble extends FightMode {
 
             attack(attacker, defender);
             if (defender.isDead()) {
-                updateHistory("Zukemon '" + defender.getClass().getSimpleName() + "' is out of the royal rumble.\r\n");
+                getFight().getHistoryRecorder().updateHistory("Zukemon '" + defender.getClass().getSimpleName() + "' is out of the royal rumble.\r\n");
                 fighters.remove(defender);
             }
         }

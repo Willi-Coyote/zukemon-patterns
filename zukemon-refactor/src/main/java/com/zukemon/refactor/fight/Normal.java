@@ -16,13 +16,13 @@ public class Normal extends FightMode {
         while (true) {
             attack(fighter1, fighter2);
             if (fighter2.isDead()) {
-                updateHistory("Zukemon '" + fighter2.getClass().getSimpleName() + "' is dead looser");
+                getFight().getHistoryRecorder().updateHistory("Zukemon '" + fighter2.getClass().getSimpleName() + "' is dead looser");
                 return fighter1;
             }
 
             attack(fighter2, fighter1);
             if (fighter1.isDead()) {
-                updateHistory("Zukemon '" + fighter1.getClass().getSimpleName() + "' is dead looser");
+                getFight().getHistoryRecorder().updateHistory("Zukemon '" + fighter1.getClass().getSimpleName() + "' is dead looser");
                 return fighter2;
             }
         }
