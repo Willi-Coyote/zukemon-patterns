@@ -9,57 +9,62 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-public class Normal implements FightMode {
+public class Normal extends FightMode {
+    public Normal(Fight fight) {
+        super(fight);
+    }
+
     @Override
-    public Zukemon fight(Fight fight) {
-        Zukemon attacker = fight.getZukemonFactory().createRandomZukemon();
-        Zukemon defender = fight.getZukemonFactory().createRandomZukemon();
+    public Zukemon fight() {
+        Zukemon fighter1 = getFight().getZukemonFactory().createRandomZukemon();
+        Zukemon fighter2 = getFight().getZukemonFactory().createRandomZukemon();
+
         while (true) {
-            int attackerDamage = attacker.hit();
-            defender.reduceLifePointsBy(attackerDamage);
-            fight.getArenaDisplay().update(attacker, attackerDamage);
-            if (attackerDamage > fight.getHighScore()) {
-                fight.setHighScore(attackerDamage);
-                System.out.println("New highscore from " + attacker.getClass().getSimpleName() + ": " + fight.getHighScore());
+            int attackerDamage = fighter1.hit();
+            fighter2.reduceLifePointsBy(attackerDamage);
+
+            getFight().getArenaDisplay().update(fighter1, attackerDamage);
+            updateHighScore( fighter1, attackerDamage);
+            updateHistory(fighter1, fighter2, attackerDamage);
+
+            if (fighter2.isDead()) {
+                return fighter1;
             }
-            String historyRecord = "Zukemon '" + attacker.getClass().getSimpleName() + "' made " + attackerDamage + " damage at '" + defender.getClass().getSimpleName() + "'\r\n";
-            try {
-                File historyFile = new File("history.txt");
-                if (!historyFile.exists()) {
-                    historyFile.createNewFile();
-                }
-                Files.write(Paths.get("history.txt"), historyRecord.getBytes(), StandardOpenOption.APPEND);
-                if (defender.isDead()) {
-                    String deadMessage = "Zukemon '" + defender.getClass().getSimpleName() + "' is dead looser";
-                    Files.write(Paths.get("history.txt"), deadMessage.getBytes(), StandardOpenOption.APPEND);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+
+            int defenderDamage = fighter2.hit();
+            fighter1.reduceLifePointsBy(defenderDamage);
+
+            updateHistory(fighter2, fighter1, defenderDamage);
+            updateHighScore(fighter2, defenderDamage);
+            getFight().getArenaDisplay().update(fighter2, defenderDamage);
+
+            if (fighter1.isDead()) {
+                return fighter2;
             }
+        }
+    }
+
+    private void updateHistory(Zukemon attacker, Zukemon defender, int damage) {
+        String historyRecord = "Zukemon '" + attacker.getClass().getSimpleName() + "' made " + damage + " damage at '" + defender.getClass().getSimpleName() + "'\r\n";
+        try {
+            File historyFile = new File("history.txt");
+            if (!historyFile.exists()) {
+                historyFile.createNewFile();
+            }
+            Files.write(Paths.get("history.txt"), historyRecord.getBytes(), StandardOpenOption.APPEND);
             if (defender.isDead()) {
-                return attacker;
+                String deadMessage = "Zukemon '" + defender.getClass().getSimpleName() + "' is dead looser";
+                Files.write(Paths.get("history.txt"), deadMessage.getBytes(), StandardOpenOption.APPEND);
             }
-            int defenderDamage = defender.hit();
-            attacker.reduceLifePointsBy(defenderDamage);
-            historyRecord = "Zukemon '" + defender.getClass().getSimpleName() + "' made " + defenderDamage + " damage at '" + attacker.getClass().getSimpleName() + "'\r\n";
-            try {
-                Files.write(Paths.get("history.txt"), historyRecord.getBytes(), StandardOpenOption.APPEND);
-                if (attacker.isDead()) {
-                    String deadMessage = "Zukemon '" + attacker.getClass().getSimpleName() + "' is dead looser";
-                    Files.write(Paths.get("history.txt"), deadMessage.getBytes(), StandardOpenOption.APPEND);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            System.out.println(defenderDamage);
-            if (defenderDamage > fight.getHighScore()) {
-                fight.setHighScore(attackerDamage);
-                System.out.println("New highscore from " + attacker.getClass().getSimpleName() + ": " + fight.getHighScore());
-            }
-            fight.getArenaDisplay().update(defender, defenderDamage);
-            if (attacker.isDead()) {
-                return defender;
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateHighScore( Zukemon fighter, int damage) {
+        if (damage > getFight().getHighScore()) {
+            getFight().setHighScore(damage);
+            System.out.println("New highscore from " + fighter.getClass().getSimpleName() + ": " + getFight().getHighScore());
         }
     }
 }

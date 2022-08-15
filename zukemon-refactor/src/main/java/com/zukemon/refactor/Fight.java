@@ -29,9 +29,9 @@ public class Fight {
         Zukemon winner = null;
 
         FightModeFactory factory = new FightModeFactory();
-        FightMode fightMode = factory.createFightMode(fightType);
+        FightMode fightMode = factory.createFightMode(fightType, this);
 
-        return fightMode.fight(this);
+        return fightMode.fight();
     }
 
     public int getHighScore() {
