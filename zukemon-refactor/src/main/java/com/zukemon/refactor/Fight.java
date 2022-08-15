@@ -31,7 +31,7 @@ public class Fight {
         FightModeFactory factory = new FightModeFactory();
         FightMode fightMode = factory.createFightMode(fightType, this);
 
-        return fightMode.fight();
+        return fightMode.attack();
     }
 
     public int getHighScore() {

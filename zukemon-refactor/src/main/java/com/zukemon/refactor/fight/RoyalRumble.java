@@ -3,11 +3,6 @@ package com.zukemon.refactor.fight;
 import com.zukemon.refactor.Fight;
 import com.zukemon.refactor.zukemons.Zukemon;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -20,7 +15,7 @@ public class RoyalRumble extends FightMode {
     }
 
     @Override
-    public Zukemon fight() {
+    public Zukemon attack() {
         Zukemon fighter1 = getFight().getZukemonFactory().createRandomZukemon();
         Zukemon fighter2 = getFight().getZukemonFactory().createRandomZukemon();
         Zukemon fighter3 = getFight().getZukemonFactory().createRandomZukemon();
@@ -41,17 +36,9 @@ public class RoyalRumble extends FightMode {
                 defender = fighters.get(new Random().nextInt(fighters.size()));
             }
 
-            int attackerDamage = attacker.hit();
-            defender.reduceLifePointsBy(attackerDamage);
-
-            getFight().getArenaDisplay().update(attacker, attackerDamage);
-            updateHighScore(attacker, attackerDamage);
-            updateHistory(attacker, defender, attackerDamage);
+            attack(attacker, defender);
             if (defender.isDead()) {
                 updateHistory("Zukemon '" + defender.getClass().getSimpleName() + "' is out of the royal rumble.\r\n");
-            }
-
-            if (defender.isDead()) {
                 fighters.remove(defender);
             }
         }

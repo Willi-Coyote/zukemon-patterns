@@ -15,7 +15,7 @@ public class Defend extends FightMode {
     }
 
     @Override
-    public Zukemon fight() {
+    public Zukemon attack() {
         Zukemon attacker = getFight().getZukemonFactory().createRandomZukemon();
         Zukemon defender = getFight().getZukemonFactory().createRandomZukemon();
 
@@ -25,17 +25,9 @@ public class Defend extends FightMode {
         int numberOfSurvivedRounds = 0;
 
         while (true) {
-            int attackerDamage = attacker.hit();
-            defender.reduceLifePointsBy(attackerDamage);
-
-            getFight().getArenaDisplay().update(attacker, attackerDamage);
-            updateHighScore(attacker, attackerDamage);
-            updateHistory(attacker, defender, attackerDamage);
+           attack(attacker, defender);
             if (defender.isDead()) {
                 updateHistory("Zukemon '" + defender.getClass().getSimpleName() + "' has survived " + numberOfSurvivedRounds + " rounds.\r\n");
-            }
-
-            if (defender.isDead()) {
                 return attacker;
             }
 

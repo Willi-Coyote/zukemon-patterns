@@ -22,7 +22,16 @@ public abstract class FightMode {
         return fight;
     }
 
-    public abstract Zukemon fight();
+    public abstract Zukemon attack();
+
+    protected void attack(Zukemon attacker, Zukemon defender) {
+        int attackerDamage = attacker.hit();
+        defender.reduceLifePointsBy(attackerDamage);
+
+        getFight().getArenaDisplay().update(attacker, attackerDamage);
+        updateHighScore( attacker, attackerDamage);
+        updateHistory(attacker, defender, attackerDamage);
+    }
 
     protected void updateHistory(Zukemon attacker, Zukemon defender, int damage) {
         String historyRecord = "Zukemon '" + getName(attacker) + "' made " + damage + " damage at '" + getName(defender) + "'\r\n";

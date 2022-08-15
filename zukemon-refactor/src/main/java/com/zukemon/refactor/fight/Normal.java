@@ -9,36 +9,20 @@ public class Normal extends FightMode {
     }
 
     @Override
-    public Zukemon fight() {
+    public Zukemon attack() {
         Zukemon fighter1 = getFight().getZukemonFactory().createRandomZukemon();
         Zukemon fighter2 = getFight().getZukemonFactory().createRandomZukemon();
 
         while (true) {
-            int attackerDamage = fighter1.hit();
-            fighter2.reduceLifePointsBy(attackerDamage);
-
-            getFight().getArenaDisplay().update(fighter1, attackerDamage);
-            updateHighScore( fighter1, attackerDamage);
-            updateHistory(fighter1, fighter2, attackerDamage);
-            if (fighter1.isDead()) {
-                updateHistory( "Zukemon '" + fighter1.getClass().getSimpleName() + "' is dead looser");
-            }
-
+            attack(fighter1, fighter2);
             if (fighter2.isDead()) {
+                updateHistory("Zukemon '" + fighter2.getClass().getSimpleName() + "' is dead looser");
                 return fighter1;
             }
 
-            int defenderDamage = fighter2.hit();
-            fighter1.reduceLifePointsBy(defenderDamage);
-
-            updateHistory(fighter2, fighter1, defenderDamage);
-            updateHighScore(fighter2, defenderDamage);
-            if (fighter2.isDead()) {
-                updateHistory( "Zukemon '" + fighter2.getClass().getSimpleName() + "' is dead looser");
-            }
-            getFight().getArenaDisplay().update(fighter2, defenderDamage);
-
+            attack(fighter2, fighter1);
             if (fighter1.isDead()) {
+                updateHistory("Zukemon '" + fighter1.getClass().getSimpleName() + "' is dead looser");
                 return fighter2;
             }
         }
