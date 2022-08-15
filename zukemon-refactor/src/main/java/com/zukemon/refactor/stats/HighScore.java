@@ -19,8 +19,4 @@ public class HighScore implements FightObserver {
     public void update(String message) {
         // do nothing
     }
-
-    public int getHighScore() {
-        return highScore;
-    }
 }

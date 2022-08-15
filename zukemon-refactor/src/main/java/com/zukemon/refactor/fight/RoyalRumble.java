@@ -1,6 +1,5 @@
 package com.zukemon.refactor.fight;
 
-import com.zukemon.refactor.Fight;
 import com.zukemon.refactor.ZukemonFactory;
 import com.zukemon.refactor.zukemons.Zukemon;
 
@@ -18,7 +17,7 @@ public class RoyalRumble extends FightMode {
     @Override
     public Zukemon attack() {
         List<Zukemon> fighters = new ArrayList<>();
-        
+
         fighters.add(getZukemonFactory().createRandomZukemon());
         fighters.add(getZukemonFactory().createRandomZukemon());
         fighters.add(getZukemonFactory().createRandomZukemon());

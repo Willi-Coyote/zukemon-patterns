@@ -1,6 +1,5 @@
 package com.zukemon.refactor.fight;
 
-import com.zukemon.refactor.Fight;
 import com.zukemon.refactor.ZukemonFactory;
 import com.zukemon.refactor.zukemons.Zukemon;
 
