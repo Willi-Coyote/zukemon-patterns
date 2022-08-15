@@ -1,17 +1,18 @@
 package com.zukemon.refactor.fight;
 
 import com.zukemon.refactor.Fight;
+import com.zukemon.refactor.ZukemonFactory;
 import com.zukemon.refactor.zukemons.Zukemon;
 
 public class Defend extends FightMode {
-    public Defend(Fight fight) {
-        super(fight);
+    public Defend(ZukemonFactory zukemonFactory) {
+        super(zukemonFactory);
     }
 
     @Override
     public Zukemon attack() {
-        Zukemon attacker = getFight().getZukemonFactory().createRandomZukemon();
-        Zukemon defender = getFight().getZukemonFactory().createRandomZukemon();
+        Zukemon attacker = getZukemonFactory().createRandomZukemon();
+        Zukemon defender = getZukemonFactory().createRandomZukemon();
 
         int initialLifePoints = defender.getLifePoints();
         // The defender gets super much life points
@@ -21,7 +22,7 @@ public class Defend extends FightMode {
         while (true) {
            attack(attacker, defender);
             if (defender.isDead()) {
-                getFight().getHistoryRecorder().updateHistory("Zukemon '" + defender.getClass().getSimpleName() + "' has survived " + numberOfSurvivedRounds + " rounds.\r\n");
+                updateObservers("Zukemon '" + defender.getClass().getSimpleName() + "' has survived " + numberOfSurvivedRounds + " rounds.\r\n");
                 return attacker;
             }
 

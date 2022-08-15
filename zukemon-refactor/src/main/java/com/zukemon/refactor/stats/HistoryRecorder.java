@@ -1,5 +1,6 @@
 package com.zukemon.refactor.stats;
 
+import com.zukemon.refactor.fight.FightObserver;
 import com.zukemon.refactor.zukemons.Zukemon;
 
 import java.io.File;
@@ -8,11 +9,21 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-public class HistoryRecorder {
+public class HistoryRecorder implements FightObserver {
 
     public static final String HISTORY_FILENAME = "history.txt";
 
-    public void updateHistory(Zukemon attacker, Zukemon defender, int damage) {
+    @Override
+    public void update(Zukemon attacker, Zukemon defender, int damage) {
+        updateHistory(attacker, defender, damage);
+    }
+
+    @Override
+    public void update(String message) {
+        updateHistory(message);
+    }
+
+    private void updateHistory(Zukemon attacker, Zukemon defender, int damage) {
         String historyRecord = "Zukemon '" + getName(attacker) + "' made " + damage + " damage at '" + getName(defender) + "'\r\n";
         try {
             ensureFileExists();
@@ -26,7 +37,7 @@ public class HistoryRecorder {
         }
     }
 
-    public void updateHistory(String message) {
+    private void updateHistory(String message) {
         try {
             ensureFileExists();
             Files.write(Paths.get(HISTORY_FILENAME), message.getBytes(), StandardOpenOption.APPEND);
@@ -42,7 +53,7 @@ public class HistoryRecorder {
         }
     }
 
-    protected String getName(Zukemon zukemon) {
+    private String getName(Zukemon zukemon) {
         return zukemon.getClass().getSimpleName();
     }
 }

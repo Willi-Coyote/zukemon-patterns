@@ -1,18 +1,36 @@
 package com.zukemon.refactor.fight;
 
 import com.zukemon.refactor.Fight;
+import com.zukemon.refactor.ZukemonFactory;
 import com.zukemon.refactor.zukemons.Zukemon;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class FightMode {
 
-    private Fight fight;
+    private List<FightObserver> observers = new ArrayList<>();
 
-    public FightMode(Fight fight) {
-        this.fight = fight;
+    private ZukemonFactory zukemonFactory;
+
+    public FightMode(ZukemonFactory zukemonFactory) {
+        this.zukemonFactory = zukemonFactory;
     }
 
-    public Fight getFight() {
-        return fight;
+    public ZukemonFactory getZukemonFactory() {
+        return zukemonFactory;
+    }
+
+    public void addObsever(FightObserver observer) {
+        this.observers.add(observer);
+    }
+
+    protected void updateObservers(Zukemon attacker, Zukemon defender, int damage) {
+        this.observers.forEach(o -> o.update(attacker, defender, damage));
+    }
+
+    protected void updateObservers(String message) {
+        this.observers.forEach(o -> o.update(message));
     }
 
     public abstract Zukemon attack();
@@ -21,8 +39,6 @@ public abstract class FightMode {
         int attackerDamage = attacker.hit();
         defender.reduceLifePointsBy(attackerDamage);
 
-        getFight().getArenaDisplay().update(attacker, attackerDamage);
-        getFight().getHighScore().setHighScore(attacker, attackerDamage);
-        fight.getHistoryRecorder().updateHistory(attacker, defender, attackerDamage);
+        updateObservers(attacker, defender, attackerDamage);
     }
 }

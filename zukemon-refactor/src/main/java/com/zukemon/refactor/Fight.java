@@ -33,24 +33,11 @@ public class Fight {
         Zukemon winner = null;
 
         FightModeFactory factory = new FightModeFactory();
-        FightMode fightMode = factory.createFightMode(fightType, this);
+        FightMode fightMode = factory.createFightMode(fightType, zukemonFactory);
+        fightMode.addObsever(arenaDisplay);
+        fightMode.addObsever(highScore);
+        fightMode.addObsever(historyRecorder);
 
         return fightMode.attack();
-    }
-
-    public ZukemonFactory getZukemonFactory() {
-        return zukemonFactory;
-    }
-
-    public ArenaDisplay getArenaDisplay() {
-        return arenaDisplay;
-    }
-
-    public HighScore getHighScore() {
-        return highScore;
-    }
-
-    public HistoryRecorder getHistoryRecorder() {
-        return historyRecorder;
     }
 }

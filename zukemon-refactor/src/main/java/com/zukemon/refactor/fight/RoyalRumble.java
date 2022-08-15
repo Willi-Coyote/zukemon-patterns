@@ -1,6 +1,7 @@
 package com.zukemon.refactor.fight;
 
 import com.zukemon.refactor.Fight;
+import com.zukemon.refactor.ZukemonFactory;
 import com.zukemon.refactor.zukemons.Zukemon;
 
 import java.util.ArrayList;
@@ -10,24 +11,19 @@ import java.util.Random;
 public class RoyalRumble extends FightMode {
 
 
-    public RoyalRumble(Fight fight) {
-        super(fight);
+    public RoyalRumble(ZukemonFactory zukemonFactory) {
+        super(zukemonFactory);
     }
 
     @Override
     public Zukemon attack() {
-        Zukemon fighter1 = getFight().getZukemonFactory().createRandomZukemon();
-        Zukemon fighter2 = getFight().getZukemonFactory().createRandomZukemon();
-        Zukemon fighter3 = getFight().getZukemonFactory().createRandomZukemon();
-        Zukemon fighter4 = getFight().getZukemonFactory().createRandomZukemon();
-        Zukemon fighter5 = getFight().getZukemonFactory().createRandomZukemon();
-
         List<Zukemon> fighters = new ArrayList<>();
-        fighters.add(fighter1);
-        fighters.add(fighter2);
-        fighters.add(fighter3);
-        fighters.add(fighter4);
-        fighters.add(fighter5);
+        
+        fighters.add(getZukemonFactory().createRandomZukemon());
+        fighters.add(getZukemonFactory().createRandomZukemon());
+        fighters.add(getZukemonFactory().createRandomZukemon());
+        fighters.add(getZukemonFactory().createRandomZukemon());
+        fighters.add(getZukemonFactory().createRandomZukemon());
 
         while (fighters.size() > 1) {
             Zukemon attacker = fighters.get(new Random().nextInt(fighters.size()));
@@ -38,7 +34,7 @@ public class RoyalRumble extends FightMode {
 
             attack(attacker, defender);
             if (defender.isDead()) {
-                getFight().getHistoryRecorder().updateHistory("Zukemon '" + defender.getClass().getSimpleName() + "' is out of the royal rumble.\r\n");
+                updateObservers("Zukemon '" + defender.getClass().getSimpleName() + "' is out of the royal rumble.\r\n");
                 fighters.remove(defender);
             }
         }

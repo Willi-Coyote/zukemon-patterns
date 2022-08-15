@@ -1,16 +1,23 @@
 package com.zukemon.refactor.stats;
 
+import com.zukemon.refactor.fight.FightObserver;
 import com.zukemon.refactor.zukemons.Zukemon;
 
-public class HighScore {
+public class HighScore implements FightObserver {
 
     private int highScore;
 
-    public void setHighScore(Zukemon fighter, int damage) {
+    @Override
+    public void update(Zukemon attacker, Zukemon defender, int damage) {
         if (damage > highScore) {
             highScore = damage;
-            System.out.println("New highscore from " + fighter.getClass().getSimpleName() + ": " + highScore);
+            System.out.println("New highscore from " + attacker.getClass().getSimpleName() + ": " + highScore);
         }
+    }
+
+    @Override
+    public void update(String message) {
+        // do nothing
     }
 
     public int getHighScore() {
