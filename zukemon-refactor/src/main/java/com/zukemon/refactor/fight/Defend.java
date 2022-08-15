@@ -30,7 +30,10 @@ public class Defend extends FightMode {
 
             getFight().getArenaDisplay().update(attacker, attackerDamage);
             updateHighScore(attacker, attackerDamage);
-            updateHistory(attacker, defender, numberOfSurvivedRounds, attackerDamage);
+            updateHistory(attacker, defender, attackerDamage);
+            if (defender.isDead()) {
+                updateHistory("Zukemon '" + defender.getClass().getSimpleName() + "' has survived " + numberOfSurvivedRounds + " rounds.\r\n");
+            }
 
             if (defender.isDead()) {
                 return attacker;
@@ -39,30 +42,6 @@ public class Defend extends FightMode {
             //heal 10% of initial lifepoints
             defender.increaseLifePointsBy(initialLifePoints / 100 * 10);
             numberOfSurvivedRounds++;
-        }
-    }
-
-    private void updateHighScore(Zukemon attacker, int attackerDamage) {
-        if (attackerDamage > getFight().getHighScore()) {
-            getFight().setHighScore(attackerDamage);
-            System.out.println("New highscore from " + attacker.getClass().getSimpleName() + ": " + getFight().getHighScore());
-        }
-    }
-
-    private void updateHistory(Zukemon attacker, Zukemon defender, int numberOfSurvivedRounds, int attackerDamage) {
-        String historyRecord = "Zukemon '" + attacker.getClass().getSimpleName() + "' made " + attackerDamage + " damage at '" + defender.getClass().getSimpleName() + "'\r\n";
-        try {
-            File historyFile = new File("history.txt");
-            if (!historyFile.exists()) {
-                historyFile.createNewFile();
-            }
-            Files.write(Paths.get("history.txt"), historyRecord.getBytes(), StandardOpenOption.APPEND);
-            if (defender.isDead()) {
-                String deadMessage = "Zukemon '" + defender.getClass().getSimpleName() + "' has survived " + numberOfSurvivedRounds + " rounds.\r\n";
-                Files.write(Paths.get("history.txt"), deadMessage.getBytes(), StandardOpenOption.APPEND);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }
