@@ -1,5 +1,5 @@
 package com.zukemon.refactor;
 
-public enum FightType {
+public enum FightMode {
     NORMAL, DEFEND, ROYAL_RUMBLE
 }
